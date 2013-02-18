@@ -105,7 +105,7 @@ CREATE TABLE Hit_pri (
 	"ClientTimes" text NOT NULL DEFAULT '',
 	"ClientWindow" text NOT NULL DEFAULT '',
 	"Value" float NOT NULL DEFAULT '0',
-	"OmniStart" timestamp NOT NULL DEFAULT 0,
+	"OmniStart" timestamp NOT NULL DEFAULT 'epoch',
 	"TimeStamp" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -253,10 +253,9 @@ CREATE TABLE IpData_pri (
 	"RegionName" varchar(50) NOT NULL DEFAULT '',
 	"CurrencyCode" varchar(50) NOT NULL DEFAULT '',
 	"CurrencySymbol" varchar(50) NOT NULL DEFAULT '',
-	"Registered" timestamp NOT NULL DEFAULT 0,
+	"Registered" timestamp NOT NULL DEFAULT 'epoch',
 	"FirstAccessTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"Value" float NOT NULL DEFAULT '0',
-	PRIMARY KEY  ("IpID")
+	"Value" float NOT NULL DEFAULT '0'
 );
 
 -- --------------------------------------------------------
@@ -275,7 +274,7 @@ CREATE TABLE Browser_pri (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO Browser_pri (BrowserID, Name, Description) VALUES 
+INSERT INTO Browser_pri ("BrowserID", "Name", "Description") VALUES 
 ('1', 'Generic', 'The DEFAULT generic browser, html interface via any standards-compliant internet browser.');
 
 -- --------------------------------------------------------
@@ -296,7 +295,7 @@ CREATE TABLE Device_pri (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO Device_pri (DeviceID, Name, Description) VALUES 
+INSERT INTO Device_pri ("DeviceID", "Name", "Description") VALUES 
 ('1', 'Test Device', 'Not a real device. Generic interface, used for testing purposes.');
 
 -- --------------------------------------------------------
@@ -312,9 +311,8 @@ CREATE TABLE Page_pri (
 	"Name" varchar(50) NOT NULL DEFAULT '',
 	"Description" text NOT NULL DEFAULT '',
 	"Attributes" text NOT NULL DEFAULT '',
-	"Code" varchar(50) NOT NULL DEFAULT '',
-	"Value" float NOT NULL DEFAULT '0',
-	UNIQUE (Code)
+	"Code" varchar(50) NOT NULL DEFAULT '' UNIQUE,
+	"Value" float NOT NULL DEFAULT '0'
 );
 
 -- --------------------------------------------------------
@@ -336,11 +334,10 @@ CREATE TABLE User_pri (
 	"Name" varchar(50) NOT NULL DEFAULT '',
 	"SiteKey" varchar(50) NOT NULL DEFAULT '',
 	"Description" text NOT NULL DEFAULT '',
-	"Value" float NOT NULL DEFAULT '0',
-	PRIMARY KEY  ("UserID")
+	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO User_pri (UserID, Name, SiteKey, Description, Value) VALUES 
+INSERT INTO User_pri ("UserID", "Name", "SiteKey", "Description", "Value") VALUES 
 ('1', 'Generic User', 'fakeSiteKey', 'Not an actual user.  Used mainly for testing purposes.', '0');
 
 -- --------------------------------------------------------
@@ -353,25 +350,26 @@ INSERT INTO User_pri (UserID, Name, SiteKey, Description, Value) VALUES
 CREATE TABLE Print_pri (
 	"PrintID" SERIAL PRIMARY KEY,
 	"Name" varchar(50) NOT NULL DEFAULT '',
-	"Cookie" varchar(50) NOT NULL DEFAULT '',
-	"BrowserString" text NOT NULL DEFAULT '',
+	"DeviceID" integer NOT NULL DEFAULT '0' REFERENCES Device_pri,
 	"BrowserID" integer NOT NULL DEFAULT '0' REFERENCES Browser_pri,
 	"Description" text NOT NULL DEFAULT '',
 	"Value" float NOT NULL DEFAULT '0',
 	"FirstAccessIP" varchar(50) NOT NULL DEFAULT '',
-	"FirstAccessTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY  ("PrintID")
+	"FirstAccessTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO Print_pri (PrintID, Name, Cookie, BrowserString, Description) VALUES 
-('1000000', 'Test Fingerprint', 'test-cookie_12.34.56.78', 'Not_Real_User, Not_Real_Browser', 'Not an actual user.  Starts auto-increment at 1,000,000.');
+CREATE INDEX "DeviceID-index" ON Print_pri ("DeviceID" DESC NULLS LAST);
+CREATE INDEX "BrowserID-index" ON Print_pri ("BrowserID" DESC NULLS LAST);
+
+INSERT INTO Print_pri ("PrintID", "Name", "DeviceID", "BrowserID", "Description") VALUES 
+('1000000', 'Test Print', '1', '1', 'Not an actual user.  Starts auto-increment at 1,000,000.');
 
 -- --------------------------------------------------------
 
 
 --	Print_User_ref
 --
---	Links fingerprint profiles to registered Users.
+--	Links print profiles to registered Users.
 
 CREATE TABLE Print_User_ref (
 	"RefID" SERIAL PRIMARY KEY,
@@ -433,7 +431,7 @@ CREATE TABLE User_Visit_log (
 	"UserID" integer NOT NULL DEFAULT '0',
 	"SiteID" integer NOT NULL DEFAULT '0',
 	"LoginTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"LogoutTime" timestamp NOT NULL DEFAULT 0,
+	"LogoutTime" timestamp NOT NULL DEFAULT 'epoch',
 	"Value" float NOT NULL DEFAULT '0'
 );
 
@@ -493,7 +491,7 @@ CREATE TABLE TimeBlock_pri (
 	"Note" text NOT NULL DEFAULT '',
 	"Date" date NOT NULL DEFAULT '0000-00-00',
 	"StartTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"EndTime" timestamp NOT NULL DEFAULT 0,
+	"EndTime" timestamp NOT NULL DEFAULT 'epoch',
 	"Less" timestamp NOT NULL DEFAULT '00:00:00',
 	"More" timestamp NOT NULL DEFAULT '00:00:00',
 	"Time" timestamp NOT NULL DEFAULT '00:00:00',
