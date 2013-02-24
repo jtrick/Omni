@@ -17,7 +17,7 @@
 --
 --	The sites registered to the Omni tracking service.
 
-CREATE TABLE Site_pri (
+CREATE TABLE "Site_pri" (
 	"SiteID" SERIAL PRIMARY KEY,
 	"Name" varchar(50) NOT NULL DEFAULT '',
 	"Description" text NOT NULL DEFAULT '',
@@ -26,9 +26,9 @@ CREATE TABLE Site_pri (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-CREATE INDEX "Domain_index" ON Site_pri ("SiteID" DESC NULLS LAST);
+CREATE INDEX "Domain_index" ON "Site_pri" ("SiteID" DESC NULLS LAST);
 
-INSERT INTO Site_pri ("SiteID", "Name", "Description", "Domain") VALUES 
+INSERT INTO "Site_pri" ("SiteID", "Name", "Description", "Domain") VALUES 
 ('1', 'Test Site', 'Not a real website, used for testing purposes.', 'example.com');
 
 -- --------------------------------------------------------
@@ -38,9 +38,9 @@ INSERT INTO Site_pri ("SiteID", "Name", "Description", "Domain") VALUES
 --
 --	All keys currently used in this system, in whatever form they are passed.
 
-CREATE TABLE Key_pri (
+CREATE TABLE "Key_pri" (
 	"PriKeyID" SERIAL PRIMARY KEY,
-	"OldKeyID" integer NOT NULL DEFAULT '0' REFERENCES Key_pri,
+	"OldKeyID" integer NOT NULL DEFAULT '0' REFERENCES "Key_pri",
 	"PriKey" varchar(64) NOT NULL DEFAULT '',
 	"OldKey" varchar(64) NOT NULL DEFAULT '',
 	"PubKey" varchar(64) NOT NULL DEFAULT '',
@@ -67,9 +67,9 @@ CREATE TABLE Key_pri (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-CREATE INDEX "PubKey-index" ON Key_pri ("PubKey" DESC NULLS LAST);
+CREATE INDEX "PubKey-index" ON "Key_pri" ("PubKey" DESC NULLS LAST);
 
-INSERT INTO Key_pri ("PriKeyID", "PriKey", "OldKeyID") VALUES 
+INSERT INTO "Key_pri" ("PriKeyID", "PriKey", "OldKeyID") VALUES 
 ('1', 'New_Connection_--_No_Key', '1');
 
 -- --------------------------------------------------------
