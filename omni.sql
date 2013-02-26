@@ -26,10 +26,10 @@ CREATE TABLE "Site_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-CREATE INDEX "Domain_index" ON "Site_pri" ("SiteID" DESC NULLS LAST);
+-- CREATE INDEX "Domain_index" ON "Site_pri" ("SiteID" DESC NULLS LAST);
 
-INSERT INTO "Site_pri" ("SiteID", "Name", "Description", "Domain") VALUES 
-('1', 'Test Site', 'Not a real website, used for testing purposes.', 'example.com');
+INSERT INTO "Site_pri" ("Name", "Description", "Domain") VALUES 
+('Test Site', 'Not a real website, used for testing purposes.', 'example.com');
 
 -- --------------------------------------------------------
 
@@ -69,8 +69,8 @@ CREATE TABLE "Key_pri" (
 
 CREATE INDEX "PubKey-index" ON "Key_pri" ("PubKey" DESC NULLS LAST);
 
-INSERT INTO "Key_pri" ("PriKeyID", "PriKey", "OldKeyID") VALUES 
-('1', 'New_Connection_--_No_Key', '1');
+INSERT INTO "Key_pri" ("PriKey", "OldKeyID") VALUES 
+('New_Connection_--_No_Key', '1');
 
 -- --------------------------------------------------------
 
@@ -132,8 +132,8 @@ CREATE TABLE "Connection_pri" (
 	"Duration" timestamp NOT NULL DEFAULT 'epoch'
 );
 
--- INSERT INTO "Connection_pri" (ConnectionID, UserID, UserIP, BrowserID, Active, Value) VALUES 
--- ('1', '1', '76.181.64.210', '2', '1', '0');
+-- INSERT INTO "Connection_pri" (, UserID, UserIP, BrowserID, Active, Value) VALUES 
+-- ('1', '76.181.64.210', '2', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -182,8 +182,8 @@ CREATE TABLE "Pattern_typ" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Pattern_typ" ("PatternTyp", "Name", "Description", "Code", "Value") VALUES 
-('1', 'Hover Wary', 'When a user hovers over an item for a period of time but does not click on it.', 'hov-wary', '0');
+INSERT INTO "Pattern_typ" ("Name", "Description", "Code", "Value") VALUES 
+('Hover Wary', 'When a user hovers over an item for a period of time but does not click on it.', 'hov-wary', '0');
 
 -- --------------------------------------------------------
 
@@ -257,8 +257,8 @@ CREATE TABLE "IpData_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "IpData_pri" ("IpID", "IP", "ServerName") VALUES 
-('1', '76.181.64.210', 'The default admin IP.');
+INSERT INTO "IpData_pri" ("IP", "ServerName") VALUES 
+('76.181.64.210', 'The default admin IP.');
 
 -- --------------------------------------------------------
 
@@ -276,8 +276,8 @@ CREATE TABLE "Browser_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Browser_pri" ("BrowserID", "Name", "Description") VALUES 
-('1', 'Generic', 'The DEFAULT generic browser, html interface via any standards-compliant internet browser.');
+INSERT INTO "Browser_pri" ("Name", "Description") VALUES 
+('Generic', 'The DEFAULT generic browser, html interface via any standards-compliant internet browser.');
 
 -- --------------------------------------------------------
 
@@ -297,8 +297,8 @@ CREATE TABLE "Device_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Device_pri" ("DeviceID", "Name", "Description") VALUES 
-('1', 'Test Device', 'Not a real device. Generic interface, used for testing purposes.');
+INSERT INTO "Device_pri" ("Name", "Description") VALUES 
+('Test Device', 'Not a real device. Generic interface, used for testing purposes.');
 
 -- --------------------------------------------------------
 
@@ -339,8 +339,8 @@ CREATE TABLE "User_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "User_pri" ("UserID", "Name", "SiteKey", "Description", "Value") VALUES 
-('1', 'Generic User', 'fakeSiteKey', 'Not an actual user.  Used mainly for testing purposes.', '0');
+INSERT INTO "User_pri" ("Name", "SiteKey", "Description", "Value") VALUES 
+('Generic User', 'fakeSiteKey', 'Not an actual user.  Used mainly for testing purposes.', '0');
 
 -- --------------------------------------------------------
 
@@ -363,8 +363,8 @@ CREATE TABLE "Print_pri" (
 CREATE INDEX "DeviceID-index" ON "Print_pri" ("DeviceID" DESC NULLS LAST);
 CREATE INDEX "BrowserID-index" ON "Print_pri" ("BrowserID" DESC NULLS LAST);
 
-INSERT INTO "Print_pri" ("PrintID", "Name", "DeviceID", "BrowserID", "Description") VALUES 
-('1000000', 'Test Print', '1', '1', 'Not an actual user.  Starts auto-increment at 1,000,000.');
+INSERT INTO "Print_pri" ("Name", "DeviceID", "BrowserID", "Description") VALUES 
+('Test Print', '1', '1', 'Not an actual user.  Starts auto-increment at 1,000,000.');
 
 -- --------------------------------------------------------
 
@@ -381,7 +381,7 @@ CREATE TABLE "Print_User_ref" (
 );
 
 INSERT INTO "Print_User_ref" ("PrintID", "UserID", "Value") VALUES 
-('1000000', '1', '0');
+('1', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -398,7 +398,7 @@ CREATE TABLE "Print_IP_ref" (
 );
 
 INSERT INTO "Print_IP_ref" ("PrintID", "IpID", "Value") VALUES 
-('1000000', '1', '0');
+('1', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -474,8 +474,8 @@ CREATE TABLE "Flag_typ" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Flag_typ" ("FlagTyp", "Name", "Description", "Code", "Value") VALUES 
-('1', 'Hover', 'When a user hovers over an item but does not click on it.', '1', '0');
+INSERT INTO "Flag_typ" ("Name", "Description", "Code", "Value") VALUES 
+('Hover', 'When a user hovers over an item but does not click on it.', '1', '0');
 
 -- --------------------------------------------------------
 
