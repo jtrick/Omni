@@ -28,8 +28,8 @@ CREATE TABLE "Site_pri" (
 
 -- CREATE INDEX "Domain_index" ON "Site_pri" ("SiteID" DESC NULLS LAST);
 
-INSERT INTO "Site_pri" ("Name", "Description", "Domain") VALUES 
-('Test Site', 'Not a real website, used for testing purposes.', 'example.com');
+INSERT INTO "Site_pri" ("Name", "Description", "Domain", "Value") VALUES 
+('Test Site', 'Not a real website, used for testing purposes.', 'example.com', '-1');
 
 -- --------------------------------------------------------
 
@@ -40,25 +40,25 @@ INSERT INTO "Site_pri" ("Name", "Description", "Domain") VALUES
 
 CREATE TABLE "Key_pri" (
 	"PriKeyID" SERIAL PRIMARY KEY,
-	"OldKeyID" integer NOT NULL DEFAULT '0' REFERENCES "Key_pri",
+	"OldKeyID" integer NOT NULL DEFAULT '1' REFERENCES "Key_pri",
 	"PriKey" varchar(64) NOT NULL DEFAULT '',
 	"OldKey" varchar(64) NOT NULL DEFAULT '',
 	"PubKey" varchar(64) NOT NULL DEFAULT '',
 	"Hash" varchar(64) NOT NULL DEFAULT '',
 	"IP" varchar(50) NOT NULL DEFAULT '',
-	"IpID" integer NOT NULL DEFAULT '0',
+	"IpID" integer NOT NULL DEFAULT '1',
 	"RemoteIP" varchar(50) NOT NULL DEFAULT '',
 	"ProxyStr" text NOT NULL DEFAULT '',
-	"SiteID" integer NOT NULL DEFAULT '0',
-	"PageID" integer NOT NULL DEFAULT '0',
+	"SiteID" integer NOT NULL DEFAULT '1',
+	"PageID" integer NOT NULL DEFAULT '1',
 	"Url" text NOT NULL DEFAULT '',
 	"BrowserString" text NOT NULL DEFAULT '',
-	"BrowserID" integer NOT NULL DEFAULT '0',
-	"HitID" integer NOT NULL DEFAULT '0',
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"DeviceID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
+	"BrowserID" integer NOT NULL DEFAULT '1',
+	"HitID" integer NOT NULL DEFAULT '1',
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"DeviceID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
 	"Cookies" text NOT NULL DEFAULT '',
 	"CookiesEnabled" varchar(3) NOT NULL DEFAULT '',
 	"CreateTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -69,8 +69,8 @@ CREATE TABLE "Key_pri" (
 
 CREATE INDEX "PubKey-index" ON "Key_pri" ("PubKey" DESC NULLS LAST);
 
-INSERT INTO "Key_pri" ("PriKey", "OldKeyID") VALUES 
-('New_Connection_--_No_Key', '1');
+INSERT INTO "Key_pri" ("PriKey", "Value") VALUES 
+('Test Key, not real.', '-1');
 
 -- --------------------------------------------------------
 
@@ -81,19 +81,19 @@ INSERT INTO "Key_pri" ("PriKey", "OldKeyID") VALUES
 
 CREATE TABLE "Hit_pri" (
 	"HitID" SERIAL PRIMARY KEY,
-	"PriKeyID" integer NOT NULL DEFAULT '0',
-	"SiteID" integer NOT NULL DEFAULT '0',
-	"IpID" integer NOT NULL DEFAULT '0',
+	"PriKeyID" integer NOT NULL DEFAULT '1',
+	"SiteID" integer NOT NULL DEFAULT '1',
+	"IpID" integer NOT NULL DEFAULT '1',
 	"IP" varchar(50) NOT NULL DEFAULT '',
 	"Url" text NOT NULL DEFAULT '',
-	"PageID" integer NOT NULL DEFAULT '0',
-	"BrowserID" integer NOT NULL DEFAULT '0',
+	"PageID" integer NOT NULL DEFAULT '1',
+	"BrowserID" integer NOT NULL DEFAULT '1',
 	"BrowserString" text NOT NULL DEFAULT '',
-	"DeviceID" integer NOT NULL DEFAULT '0',
+	"DeviceID" integer NOT NULL DEFAULT '1',
 	"DeviceString" text NOT NULL DEFAULT '',
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
 	"Sender" text NOT NULL DEFAULT '',
 	"Cookies" text NOT NULL DEFAULT '',
 	"CookiesEnabled" varchar(3) NOT NULL DEFAULT '',
@@ -109,6 +109,8 @@ CREATE TABLE "Hit_pri" (
 	"TimeStamp" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO "Hit_pri" ("Value") VALUES ('-1');
+
 -- --------------------------------------------------------
 
 
@@ -118,13 +120,13 @@ CREATE TABLE "Hit_pri" (
 
 CREATE TABLE "Connection_pri" (
 	"ConnectionID" SERIAL PRIMARY KEY,
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
-	"IpID" integer NOT NULL DEFAULT '0',
-	"SiteID" integer NOT NULL DEFAULT '0',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
+	"IpID" integer NOT NULL DEFAULT '1',
+	"SiteID" integer NOT NULL DEFAULT '1',
 	"Sender" text NOT NULL DEFAULT '',
-	"BrowserID" integer NOT NULL DEFAULT '0',
-	"DeviceID" integer NOT NULL DEFAULT '0',
+	"BrowserID" integer NOT NULL DEFAULT '1',
+	"DeviceID" integer NOT NULL DEFAULT '1',
 	"Active" boolean NOT NULL DEFAULT '0',
 	"Value" float NOT NULL DEFAULT '0',
 	"StartConnectionTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -132,8 +134,7 @@ CREATE TABLE "Connection_pri" (
 	"Duration" timestamp NOT NULL DEFAULT 'epoch'
 );
 
--- INSERT INTO "Connection_pri" (, UserID, UserIP, BrowserID, Active, Value) VALUES 
--- ('1', '76.181.64.210', '2', '1', '0');
+INSERT INTO "Connection_pri" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -144,27 +145,29 @@ CREATE TABLE "Connection_pri" (
 
 CREATE TABLE "Activity_log" (
 	"LogID" SERIAL PRIMARY KEY,
-	"PriKeyID" integer NOT NULL DEFAULT '0',
-	"HitID" integer NOT NULL DEFAULT '0',
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"CallID" integer NOT NULL DEFAULT '0',
+	"PriKeyID" integer NOT NULL DEFAULT '1',
+	"HitID" integer NOT NULL DEFAULT '1',
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"CallID" integer NOT NULL DEFAULT '1',
 	"IP" varchar(50) NOT NULL DEFAULT '',
-	"IpID" integer NOT NULL DEFAULT '0',
+	"IpID" integer NOT NULL DEFAULT '1',
 	"RemoteIP" varchar(50) NOT NULL DEFAULT '',
 	"FwdIpStr" text NOT NULL DEFAULT '',
-	"BrowserID" integer NOT NULL DEFAULT '0',
+	"BrowserID" integer NOT NULL DEFAULT '1',
 	"BrowserString" text NOT NULL DEFAULT '',
-	"DeviceID" integer NOT NULL DEFAULT '0',
+	"DeviceID" integer NOT NULL DEFAULT '1',
 	"DeviceString" text NOT NULL DEFAULT '',
-	"SiteID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
+	"SiteID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
 	"Data" text NOT NULL DEFAULT '',
 	"Log" text NOT NULL DEFAULT '',
 	"Times" text NOT NULL DEFAULT '',
 	"Value" float NOT NULL DEFAULT '0',
 	"TimeSent" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO "Activity_log" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -194,14 +197,16 @@ INSERT INTO "Pattern_typ" ("Name", "Description", "Code", "Value") VALUES
 
 CREATE TABLE "Event_log" (
 	"LogID" SERIAL PRIMARY KEY,
-	"PatternTyp" integer NOT NULL DEFAULT '0' REFERENCES "Pattern_typ",
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"HitID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
+	"PatternTyp" integer NOT NULL DEFAULT '1' REFERENCES "Pattern_typ",
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"HitID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
 	"Time" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"Value" float NOT NULL DEFAULT '0'
 );
+
+INSERT INTO "Event_log" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -212,21 +217,23 @@ CREATE TABLE "Event_log" (
 
 CREATE TABLE "Call_pri" (
 	"CallID" SERIAL PRIMARY KEY,
-	"SiteID" integer NOT NULL DEFAULT '0',
-	"PriKeyID" integer NOT NULL DEFAULT '0',
+	"SiteID" integer NOT NULL DEFAULT '1',
+	"PriKeyID" integer NOT NULL DEFAULT '1',
 	"TimeStamp" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
-	"HitID" integer NOT NULL DEFAULT '0',
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
+	"HitID" integer NOT NULL DEFAULT '1',
 	"IP" varchar(50) NOT NULL DEFAULT '',
-	"BrowserID" integer NOT NULL DEFAULT '0',
+	"BrowserID" integer NOT NULL DEFAULT '1',
 	"BrowserString" text NOT NULL DEFAULT '',
 	"Url" text NOT NULL DEFAULT '',
 	"Sender" text NOT NULL DEFAULT '',
 	"cmd" text NOT NULL DEFAULT '',
 	"Value" float NOT NULL DEFAULT '0'
 );
+
+INSERT INTO "Call_pri" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -257,8 +264,8 @@ CREATE TABLE "IpData_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "IpData_pri" ("IP", "ServerName") VALUES 
-('76.181.64.210', 'The default admin IP.');
+INSERT INTO "IpData_pri" ("IP", "ServerName", "Value") VALUES 
+('76.181.64.210', 'The default admin IP.', '1');
 
 -- --------------------------------------------------------
 
@@ -276,8 +283,8 @@ CREATE TABLE "Browser_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Browser_pri" ("Name", "Description") VALUES 
-('Generic', 'The DEFAULT generic browser, html interface via any standards-compliant internet browser.');
+INSERT INTO "Browser_pri" ("Name", "Description", "Value") VALUES 
+('Generic', 'The DEFAULT generic browser, html interface via any standards-compliant internet browser.', '-1');
 
 -- --------------------------------------------------------
 
@@ -297,8 +304,8 @@ CREATE TABLE "Device_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Device_pri" ("Name", "Description") VALUES 
-('Test Device', 'Not a real device. Generic interface, used for testing purposes.');
+INSERT INTO "Device_pri" ("Name", "Description", "Value") VALUES 
+('Test Device', 'Not a real device. Generic interface, used for testing purposes.', '-1');
 
 -- --------------------------------------------------------
 
@@ -309,13 +316,15 @@ INSERT INTO "Device_pri" ("Name", "Description") VALUES
 
 CREATE TABLE "Page_pri" (
 	"NavID" SERIAL PRIMARY KEY,
-	"SiteID" integer NOT NULL DEFAULT '0' REFERENCES "Site_pri",
+	"SiteID" integer NOT NULL DEFAULT '1' REFERENCES "Site_pri",
 	"Name" varchar(50) NOT NULL DEFAULT '',
 	"Description" text NOT NULL DEFAULT '',
 	"Attributes" text NOT NULL DEFAULT '',
 	"Code" varchar(50) NOT NULL DEFAULT '' UNIQUE,
 	"Value" float NOT NULL DEFAULT '0'
 );
+
+INSERT INTO "Page_pri" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -340,7 +349,7 @@ CREATE TABLE "User_pri" (
 );
 
 INSERT INTO "User_pri" ("Name", "SiteKey", "Description", "Value") VALUES 
-('Generic User', 'fakeSiteKey', 'Not an actual user.  Used mainly for testing purposes.', '0');
+('Generic User', 'fakeSiteKey', 'Not an actual user.', '-1');
 
 -- --------------------------------------------------------
 
@@ -352,8 +361,8 @@ INSERT INTO "User_pri" ("Name", "SiteKey", "Description", "Value") VALUES
 CREATE TABLE "Print_pri" (
 	"PrintID" SERIAL PRIMARY KEY,
 	"Name" varchar(50) NOT NULL DEFAULT '',
-	"DeviceID" integer NOT NULL DEFAULT '0' REFERENCES "Device_pri",
-	"BrowserID" integer NOT NULL DEFAULT '0' REFERENCES "Browser_pri",
+	"DeviceID" integer NOT NULL DEFAULT '1' REFERENCES "Device_pri",
+	"BrowserID" integer NOT NULL DEFAULT '1' REFERENCES "Browser_pri",
 	"Description" text NOT NULL DEFAULT '',
 	"Value" float NOT NULL DEFAULT '0',
 	"FirstAccessIP" varchar(50) NOT NULL DEFAULT '',
@@ -363,8 +372,8 @@ CREATE TABLE "Print_pri" (
 CREATE INDEX "DeviceID-index" ON "Print_pri" ("DeviceID" DESC NULLS LAST);
 CREATE INDEX "BrowserID-index" ON "Print_pri" ("BrowserID" DESC NULLS LAST);
 
-INSERT INTO "Print_pri" ("Name", "DeviceID", "BrowserID", "Description") VALUES 
-('Test Print', '1', '1', 'Not an actual user.  Starts auto-increment at 1,000,000.');
+INSERT INTO "Print_pri" ("Name", "Description", "Value") VALUES 
+('Test Print', 'Not an actual print profile.', '-1');
 
 -- --------------------------------------------------------
 
@@ -375,13 +384,12 @@ INSERT INTO "Print_pri" ("Name", "DeviceID", "BrowserID", "Description") VALUES
 
 CREATE TABLE "Print_User_ref" (
 	"RefID" SERIAL PRIMARY KEY,
-	"PrintID" integer NOT NULL DEFAULT '0' REFERENCES "Print_pri",
-	"UserID" integer NOT NULL DEFAULT '0' REFERENCES "User_pri",
+	"PrintID" integer NOT NULL DEFAULT '1' REFERENCES "Print_pri",
+	"UserID" integer NOT NULL DEFAULT '1' REFERENCES "User_pri",
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Print_User_ref" ("PrintID", "UserID", "Value") VALUES 
-('1', '1', '0');
+INSERT INTO "Print_User_ref" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -392,13 +400,12 @@ INSERT INTO "Print_User_ref" ("PrintID", "UserID", "Value") VALUES
 
 CREATE TABLE "Print_IP_ref" (
 	"RefID" SERIAL PRIMARY KEY,
-	"PrintID" integer NOT NULL DEFAULT '0' REFERENCES "Print_pri",
-	"IpID" integer NOT NULL DEFAULT '0' REFERENCES "IpData_pri",
+	"PrintID" integer NOT NULL DEFAULT '1' REFERENCES "Print_pri",
+	"IpID" integer NOT NULL DEFAULT '1' REFERENCES "IpData_pri",
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "Print_IP_ref" ("PrintID", "IpID", "Value") VALUES 
-('1', '1', '0');
+INSERT INTO "Print_IP_ref" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -409,14 +416,13 @@ INSERT INTO "Print_IP_ref" ("PrintID", "IpID", "Value") VALUES
 
 CREATE TABLE "User_prefs_pri" (
 	"UserPrefsID" SERIAL PRIMARY KEY,
-	"UserID" integer NOT NULL DEFAULT '0',
+	"UserID" integer NOT NULL DEFAULT '1',
 	"TransitionSpeed" float NOT NULL DEFAULT '.25',
 	"Cookies" varchar(50) NOT NULL DEFAULT '1',
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "User_prefs_pri" ("UserID", "TransitionSpeed", "Cookies", "Value") VALUES 
-('1', '200', '1234567890', '0');
+INSERT INTO "User_prefs_pri" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -427,18 +433,17 @@ INSERT INTO "User_prefs_pri" ("UserID", "TransitionSpeed", "Cookies", "Value") V
 
 CREATE TABLE "User_Visit_log" (
 	"LogID" SERIAL PRIMARY KEY,
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"IpID" integer NOT NULL DEFAULT '0' REFERENCES "IpData_pri",
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
-	"SiteID" integer NOT NULL DEFAULT '0',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"IpID" integer NOT NULL DEFAULT '1' REFERENCES "IpData_pri",
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
+	"SiteID" integer NOT NULL DEFAULT '1',
 	"LoginTime" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"LogoutTime" timestamp NOT NULL DEFAULT 'epoch',
 	"Value" float NOT NULL DEFAULT '0'
 );
 
-INSERT INTO "User_Visit_log" ("PrintID", "IpID", "ConnectionID", "UserID") VALUES 
-('1', '1', '1234567890', '0');
+INSERT INTO "User_Visit_log" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -449,15 +454,17 @@ INSERT INTO "User_Visit_log" ("PrintID", "IpID", "ConnectionID", "UserID") VALUE
 
 CREATE TABLE "User_Nav_log" (
 	"NavLogID" SERIAL PRIMARY KEY,
-	"ConnectionID" integer NOT NULL DEFAULT '0',
-	"PrintID" integer NOT NULL DEFAULT '0',
-	"UserID" integer NOT NULL DEFAULT '0',
-	"SiteID" integer NOT NULL DEFAULT '0',
+	"ConnectionID" integer NOT NULL DEFAULT '1',
+	"PrintID" integer NOT NULL DEFAULT '1',
+	"UserID" integer NOT NULL DEFAULT '1',
+	"SiteID" integer NOT NULL DEFAULT '1',
 	"url" text NOT NULL DEFAULT '',
-	"NavID" integer NOT NULL DEFAULT '0',
+	"NavID" integer NOT NULL DEFAULT '1',
 	"Time" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"Value" float NOT NULL DEFAULT '0'
 );
+
+INSERT INTO "User_Nav_log" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
@@ -486,7 +493,7 @@ INSERT INTO "Flag_typ" ("Name", "Description", "Code", "Value") VALUES
 
 CREATE TABLE "TimeBlock_pri" (
 	"TimeBlockID" SERIAL PRIMARY KEY,
-	"PrintID" integer NOT NULL DEFAULT '0',
+	"PrintID" integer NOT NULL DEFAULT '1',
 	"Name" varchar(50) NOT NULL DEFAULT '',
 	"Description" text NOT NULL DEFAULT '',
 	"Note" text NOT NULL DEFAULT '',
@@ -498,6 +505,8 @@ CREATE TABLE "TimeBlock_pri" (
 	"Time" interval NOT NULL DEFAULT '00:00:00',
 	"Value" float NOT NULL DEFAULT '0'
 );
+
+INSERT INTO "TimeBlock_pri" ("Value") VALUES ('-1');
 
 -- --------------------------------------------------------
 
