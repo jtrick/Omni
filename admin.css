@@ -5,11 +5,11 @@
 
 
 html {
-
+    font-family: Segoe UI, Arial;
 }
 
 body {
-
+    margin: 0;
 }
 
 
@@ -23,63 +23,252 @@ body {
 }
 
 .top-menu-item {
-
+    float: left;
+    padding: 0 15px;
+    border-left: 1px solid #ffffff;
 }
 
-.searchbox {
+.top-menu-item:not(.searchbox) {
+    cursor: pointer;
+}
 
+.top-menu-item.selected {
+    background-image: -webkit-linear-gradient(top,#789b25,#a5d140);
+    background-image: -moz-linear-gradient(top,#789b25,#a5d140);
+    background-image: -ms-linear-gradient(top,#789b25,#a5d140);
+    background-image: -o-linear-gradient(top,#789b25,#a5d140);
+    background-image: linear-gradient(top,#789b25,#a5d140);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#789b25',EndColorStr='#a5d140');
+}
+
+.searchbox > div{
+    position: relative;
+}
+
+.searchbox input {
+    border: 0;
+    height: 28px;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
+    border-radius: 14px;
+    padding: 0 33px 0 10px;
+    color: #999999;
+    font-size: 11px;
+    position: relative;
+    top: -3px;
+}
+
+.searchbox .search-btn {
+    background-image: url('images/search-icon.png');
+    background-repeat: no-repeat;
+    background-position: 5px;
+    border-left: 1px solid #dddddd;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    height: 15px;
+    width: 25px;
 }
 
 .btn {
-
+    padding: 0 15px;
+    background-color: #666666;
+    font-size: 20px;
+    line-height: 45px;
+    display: inline-block;
+    color: #ffffff;
+    border: 1px solid #d1d5c4;
+    float: right;
+    margin-left: 8px;
+    cursor: pointer;
 }
 
+.card {
+    border: 1px solid #d1d5c4;
+    width: 443px;
+    height: 250px;
+    float: left;
+    margin: 10px 5px 0 5px;
+}
 
+.card .title {
+    background-color: #557be6;
+    color: #ffffff;
+    font-size: 20px;
+    padding: 0;
+    cursor: move;
+    height: 50px;
+}
+
+.card .title div {
+    float: left;
+    line-height: 50px;
+}
+
+.card p {
+    margin: 0 0 10px 0;
+}
+
+.card .body {
+    padding: 10px 60px;
+    font-size: 18px;
+    color: #666666;
+}
+
+.card .body div {
+    float: left;
+}
+
+.card .body .timeframe {
+    padding-right: 10px;
+}
+
+.card .body .tag {
+    clear: both;
+}
+
+.card .large {
+    font-size: 50px;
+    position: relative;
+    top: -15px;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.card-btns {
+    padding: 15px 0;
+}
+
+.card-btns div {
+    cursor: pointer;
+    width: 50px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+    .graphs-card-btn {
+        background-image: url('images/card-icons.png');
+    }
+
+    .duplicate-card-btn {
+        background-image: url('images/card-icons.png');
+        background-position: 0 -40px;
+    }
+
+    .share-card-btn {
+        background-image: url('images/card-icons.png');
+        background-position: 0 -80px;
+    }
+
+    .delete-card-btn {
+        background-image: url('images/card-icons.png');
+        background-position: 0 -120px;
+    }
+
+    .title-icon {
+        display: inline-block;
+        width: 45px;
+        height: 31px;
+        margin: 10px 8px 0 7px;
+        background-image: url('images/card-title-icons.png');
+    }
+
+    .title-icon-2 {
+        display: inline-block;
+        width: 45px;
+        height: 39px;
+        margin: 4px 8px 0 7px;
+        background-image: url('images/card-title-icons.png');
+        background-position: 0 -31px;
+    }
 
 /* IDs *********************/
 
 
 #main-div {
+    width: 910px;
+    margin: auto;
+}
 
+#main-top-bar {
+    background-color: #a5d140;
+    position: absolute;
+    height: 45px;
+    border-bottom: 1px solid #d1d5c4;
+    width: 100%;
+    z-index: -1;
+    -webkit-box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
 }
 
 #omni-top-menu {
+    line-height: 45px;
+    height: 45px;
+    color: #ffffff;
+    font-size: 17px;
+    border-right: 1px solid #ffffff;
+    margin: 0 5px;
+}
 
+#buttons-sect {
+    padding: 10px 5px 0 5px;
+    height: 47px;
 }
 
 	#logo-menu {
-		
+        background-image: url('images/omni-logo.png');
+        background-repeat: no-repeat;
+        background-position: 11px 13px;
+        width: 55px;
 	}
-	
+
 	#patterns-menu {
-		
+
 	}
-	
+
 	#graphs-menu {
-		
+
 	}
-	
+
 	#people-menu {
-		
+
 	}
-	
+
 	#intelligence-menu {
-		
+
 	}
-	
+
 	#search-menu {
-		
+        float: right;
 	}
-	
+
 	#settings-menu {
-		
+        float: right;
+    }
+
+    #settings-menu div {
+        width: 16px;
+        height: 16px;
+        margin: 15px 0 14px 0;
+        background-image: url('images/menu-icons.png');
+        background-position: 0 -16px;
 	}
-	
+
 	#power-menu {
-		
+        float: right;
+    }
+
+    #power-menu div {
+        width: 16px;
+        height: 16px;
+        margin: 15px 0 14px 0;
+        background-image: url('images/menu-icons.png');
 	}
-	
-	
+
+
 
 
 

@@ -7,34 +7,107 @@
     <link rel="stylesheet" href="admin.css"/>
 </head>
 <body>
+    <div id="main-top-bar"></div>
 	<div id="main-div" class="container">
 
-		<h1>Omni Admin Panel</h1>
 		<div id="omni-top-menu" class="menu">
-			<div class="container">
-				<div id="logo-menu" class="top-menu-item"></div>
-				<div id="patterns-menu" class="top-menu-item"></div>
-				<div id="graphs-menu" class="top-menu-item"></div>
-				<div id="people-menu" class="top-menu-item"></div>
-				<div id="intelligence-menu" class="top-menu-item"></div>
-				<div id="search-menu" class="searchbox top-menu-item"></div>
-				<div id="settings-menu" class="top-menu-item"></div>
-				<div id="power-menu" class="top-menu-item"></div>
-			</div><!-- /.container -->
+            <div class="container">
+                <div id="logo-menu" class="top-menu-item">&nbsp;</div>
+                <div id="patterns-menu" class="top-menu-item selected">Patterns</div>
+                <div id="graphs-menu" class="top-menu-item">Graphs</div>
+                <div id="people-menu" class="top-menu-item">People</div>
+                <div id="intelligence-menu" class="top-menu-item">Intelligence</div>
+                <div id="power-menu" class="top-menu-item"><div></div></div>
+                <div id="settings-menu" class="top-menu-item"><div></div></div>
+                <div id="search-menu" class="searchbox top-menu-item">
+                    <div>
+                        <input type="text" value="Search" />
+                        <div class="search-btn"></div>
+                    </div>
+                </div>
+            </div><!-- /.container -->
 		</div><!-- /#omni-top-menu -->
 		
 		<div id="buttons-sect" class="container">
-			<div id="new-btn" class="btn"></div>
-			<div id="manage-btn" class="btn"></div>
+			<div id="manage-btn" class="btn">Manage Patterns</div>
+            <div id="new-btn" class="btn">Create New</div>
 		</div><!-- /#buttons-sect -->
 		
 		<div id="panels-sect" class="container">
-			
+			<div class="card">
+                <div class="title" style="background-color: #e75555">
+                    <div class="title-icon"></div>
+                    <div>Time Spent On Home Page Prior ...</div>
+                </div>
+                <div class="body">
+                    <div class="timeframe">In the <span class="underline">last hour</span>:</div>
+                    <div class="large">11.78s</div>
+                    <div class="tag">Tag: Display this data daily</div>
+                    <div class="card-btns">
+                        <div class="graphs-card-btn"></div>
+                        <div class="duplicate-card-btn"></div>
+                        <div class="share-card-btn"></div>
+                        <div class="delete-card-btn"></div>
+                    </div>
+                </div>
+			</div>
+            <div class="card">
+                <div class="title">
+                    <div class="title-icon-2"></div>
+                    <div>Number Of New Logins Created</div>
+                </div>
+                <div class="body">
+                    <div class="timeframe">In the <span class="underline">last 6 hours</span>:</div>
+                    <div class="large">9</div>
+                    <div class="tag">Tag: Display this data every Monday</div>
+                    <div class="card-btns">
+                        <div class="graphs-card-btn"></div>
+                        <div class="duplicate-card-btn"></div>
+                        <div class="share-card-btn"></div>
+                        <div class="delete-card-btn"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="title">
+                    <div class="title-icon-2"></div>
+                    <div>Number Of Unique Guest IDs</div>
+                </div>
+                <div class="body">
+                    <div class="timeframe">In the <span class="underline">last 6 hours</span>:</div>
+                    <div class="large">22</div>
+                    <div class="tag">Tag: Display this data every Monday</div>
+                    <div class="card-btns">
+                        <div class="graphs-card-btn"></div>
+                        <div class="duplicate-card-btn"></div>
+                        <div class="share-card-btn"></div>
+                        <div class="delete-card-btn"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="title">
+                    <div class="title-icon-2"></div>
+                    <div>Ratio New Logins Created/Unique ...</div>
+                </div>
+                <div class="body">
+                    <div class="timeframe">In the <span class="underline">last 6 hours</span>:</div>
+                    <div class="large">0.409</div>
+                    <div class="tag">Tag: Display this data every Monday</div>
+                    <div class="card-btns">
+                        <div class="graphs-card-btn"></div>
+                        <div class="duplicate-card-btn"></div>
+                        <div class="share-card-btn"></div>
+                        <div class="delete-card-btn"></div>
+                    </div>
+                </div>
+            </div>
 		</div><!-- /#panels-sect -->
 		
 	</div><!-- /#main-div -->
 	
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
 	<script src="admin.js"></script>
 </body>
 </html>
