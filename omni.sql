@@ -264,6 +264,8 @@ CREATE TABLE "IpData_pri" (
 	"Value" float NOT NULL DEFAULT '0'
 );
 
+CREATE INDEX "IP-index" ON "IpData_pri" ("IP" DESC NULLS LAST);
+
 INSERT INTO "IpData_pri" ("IP", "ServerName", "Value") VALUES 
 ('76.181.64.210', 'The default admin IP.', '1');
 
