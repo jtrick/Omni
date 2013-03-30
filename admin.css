@@ -33,12 +33,12 @@ body {
 }
 
 .top-menu-item.selected {
-    background-image: -webkit-linear-gradient(top,#789b25,#a5d140);
+    /*background-image: -webkit-linear-gradient(top,#789b25,#a5d140);
     background-image: -moz-linear-gradient(top,#789b25,#a5d140);
     background-image: -ms-linear-gradient(top,#789b25,#a5d140);
     background-image: -o-linear-gradient(top,#789b25,#a5d140);
     background-image: linear-gradient(top,#789b25,#a5d140);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#789b25',EndColorStr='#a5d140');
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#789b25',EndColorStr='#a5d140');*/
 }
 
 .searchbox > div{
@@ -73,13 +73,13 @@ body {
 .btn {
     padding: 0 15px;
     background-color: #666666;
-    font-size: 20px;
-    line-height: 45px;
+    font-size: 16px;
+    line-height: 36px;
+    height: 36px;
     display: inline-block;
     color: #ffffff;
     border: 1px solid #d1d5c4;
-    float: right;
-    margin-left: 8px;
+    margin-right: 8px;
     cursor: pointer;
 }
 
@@ -138,14 +138,15 @@ body {
 }
 
 .card-btns {
-    padding: 15px 0;
+    float: right;
 }
 
 .card-btns div {
     cursor: pointer;
-    width: 50px;
-    height: 40px;
-    margin-right: 15px;
+    width: 30px;
+    height: 24px;
+    margin: 7px 0 0 25px;
+    display: inline-block;
 }
 
     .graphs-card-btn {
@@ -154,17 +155,17 @@ body {
 
     .duplicate-card-btn {
         background-image: url('images/card-icons.png');
-        background-position: 0 -40px;
+        background-position: 0 -24px;
     }
 
     .share-card-btn {
         background-image: url('images/card-icons.png');
-        background-position: 0 -80px;
+        background-position: 0 -48px;
     }
 
     .delete-card-btn {
         background-image: url('images/card-icons.png');
-        background-position: 0 -120px;
+        background-position: 0 -72px;
     }
 
     .title-icon {
@@ -183,6 +184,26 @@ body {
         background-image: url('images/card-title-icons.png');
         background-position: 0 -31px;
     }
+
+/* drop down selector */
+.select-dropdown {
+    background-color: #f1f1f1;
+    border: 1px solid #666;
+    color: #666;
+    list-style: none;
+    padding: 0;
+    font-size: 13px;
+}
+
+.select-dropdown li {
+    padding: 5px 10px;
+}
+
+.select-dropdown li:hover {
+    background-color: #666;
+    color: #fff;
+    cursor: pointer;
+}
 
 /* IDs *********************/
 
@@ -214,8 +235,8 @@ body {
 }
 
 #buttons-sect {
-    padding: 10px 5px 0 5px;
-    height: 47px;
+    padding: 20px 5px 0 5px;
+    height: 40px;
 }
 
 	#logo-menu {
