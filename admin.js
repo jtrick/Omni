@@ -5,7 +5,7 @@
 $(document).ready(function omniAdminReady() {
 
 
-var cards = {
+var patterns = {
 		"dfhfdgh" : {
 			"name" : 'whatever'	
 		}
