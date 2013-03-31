@@ -1,5 +1,17 @@
 // omni/admin.js  Copyright (c)2013 Codapt LLC, all rights reserved.  For license see: http://OpenAce.org/license?id=omni/admin.js
 
+
+
+$(document).ready(function omniAdminReady() {
+
+
+var cards = {
+		"dfhfdgh" : {
+			"name" : 'whatever'	
+		}
+	};
+
+
 var watch = function(obj, attr, name, callback) {
     var watchedValue = obj[attr];
     // add a list of watchers to the object if not present
@@ -62,20 +74,31 @@ $.widget("ui.patternCard", {
                         + '<div class="delete-card-btn"></div>'
                     + '</div>'
                 + '</div>'
-			);
-
+			),
+			data = cards.id;
+			
+	
         domElem.addClass("card").html(cardTemp(options));
 
         domElem.children(".title").disableSelection();
         if (options.hasOwnProperty("titleColor")) {
             domElem.children(".title").css("backgroundColor", options.titleColor);
         }
-    }
+    },
+    
+	update: function(data) {
+		
+	};
 });
 
-$(document).ready(function omniAdminReady() {
+
+
+	function 
+	
+	
 
     $("#card1").patternCard({
+        id: 'jghsdfjh',
         title: "Time Spent On Homepage Prior ...",
         timeframe: "last hour",
         statistic: "11.78s",
@@ -137,6 +160,8 @@ $(document).ready(function omniAdminReady() {
     setInterval(function() {
         b.newLogins++;
     }, 2000);
+    
+    
     
     
     
@@ -354,11 +379,11 @@ $(document).ready(function omniAdminReady() {
 			val = callObj.val;
 		if (cmd == "get") { return localStorage.getItem(key); }
 		if (cmd == "set") { return localStorage.setItem(key, val); }
-		if (cmd == "add") {	return localStorage.setItem(key, val); }
-		if (cmd == "del") {	return localStorage.removeItem(key); }
+		if (cmd == "add") { return localStorage.setItem(key, val); }
+		if (cmd == "del") { return localStorage.removeItem(key); }
 		if (cmd == "clr") { return localStorage.clear(); }  // Erases the entire db. Fix. Safety mechanisms?
 		if (cmd == "has") { return (undefined===localStorage.getItem(key))?false:true; }
-		if (cmd == "all") {	
+		if (cmd == "all") {
 			var tblArray = [];
 			for (var tblName in localStorage) { tblArray.push(tblName); }
 			return tblArray;
