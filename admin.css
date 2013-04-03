@@ -10,6 +10,7 @@ html {
 
 body {
     margin: 0;
+    font-size: 16px;
 }
 
 
@@ -53,7 +54,7 @@ body {
     border-radius: 14px;
     padding: 0 33px 0 10px;
     color: #999999;
-    font-size: 11px;
+    font-size: 0.6875em;
     position: relative;
     top: -3px;
 }
@@ -73,7 +74,7 @@ body {
 .btn {
     padding: 0 15px;
     background-color: #666666;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 36px;
     height: 36px;
     display: inline-block;
@@ -86,21 +87,30 @@ body {
 .card {
     border: 1px solid #d1d5c4;
     width: 443px;
-    height: 250px;
     float: left;
     margin: 10px 5px 0 5px;
+    position: relative;
 }
 
 .card .title {
     background-color: #557be6;
     color: #ffffff;
-    font-size: 20px;
-    padding: 0;
+    font-size: 1.25em;
+    padding: 0 0 0 15px;
     cursor: move;
     height: 50px;
 }
 
-.card .title div {
+.card .check {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 33px;
+    height: 33px;
+    background-image: url("images/check.png");
+}
+
+.card .title > div {
     float: left;
     line-height: 50px;
 }
@@ -110,31 +120,44 @@ body {
 }
 
 .card .body {
-    padding: 10px 60px;
-    font-size: 18px;
+    padding: 0;
+    font-size: 1.125em;
     color: #666666;
+    position: relative;
 }
 
-.card .body div {
-    float: left;
+/* Pattern Card specific styles */
+
+.card .content {
+    padding: 10px 60px;
 }
 
-.card .body .timeframe {
+.card .content > div {
+    display: inline-block;
+    height: 60px;
+    vertical-align: top;
+}
+
+.card .content .timeframe {
     padding-right: 10px;
 }
 
-.card .body .tag {
-    clear: both;
+.card .tag {
+    background-color: #f1f1f1;
+    padding: 15px 20px;
+    margin: 0 10px 10px 10px;
 }
 
 .card .large {
-    font-size: 50px;
+    font-size: 3.125em;
     position: relative;
     top: -15px;
+    cursor: pointer;
 }
 
 .underline {
     text-decoration: underline;
+    display: inline-block;
 }
 
 .card-btns {
@@ -172,7 +195,7 @@ body {
         display: inline-block;
         width: 45px;
         height: 31px;
-        margin: 10px 8px 0 7px;
+        margin: 10px 8px 0 0;
         background-image: url('images/card-title-icons.png');
     }
 
@@ -180,29 +203,103 @@ body {
         display: inline-block;
         width: 45px;
         height: 39px;
-        margin: 4px 8px 0 7px;
+        margin: 4px 8px 0 0;
         background-image: url('images/card-title-icons.png');
         background-position: 0 -31px;
     }
 
 /* drop down selector */
 .select-dropdown {
-    background-color: #f1f1f1;
-    border: 1px solid #666;
-    color: #666;
     list-style: none;
     padding: 0;
-    font-size: 13px;
+    font-size: 0.875em;
+    margin: 0;
+    z-index: 1000;
+    position: absolute;
+}
+
+.select-dropdown.light {
+    background-color: #f1f1f1;
+    color: #666;
+    border: 1px solid #666;
+}
+
+.select-dropdown.dark {
+    background-color: #666;
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
 }
 
 .select-dropdown li {
     padding: 5px 10px;
+    position: relative;
+    line-height: 1.6em;
+    border: 1px solid transparent;
 }
 
 .select-dropdown li:hover {
-    background-color: #666;
     color: #fff;
     cursor: pointer;
+}
+
+.select-dropdown.light li:hover {
+    background-color: #666;
+    color: #f1f1f1;
+    border: 1px solid #f1f1f1;
+}
+
+.select-dropdown.dark li:hover {
+    background-color: #f1f1f1;
+    color: #666;
+    border: 1px solid #666;
+}
+
+.select-dropdown .arrow {
+    width: 25px;
+    height: 15px;
+    position: absolute;
+    top: -16px;
+    left: 20px;
+}
+
+.select-dropdown.light .arrow {
+    background-image: url("images/select-dropdown-arrow-light.png");
+}
+
+.select-dropdown.dark .arrow {
+    background-image: url("images/select-dropdown-arrow-dark.png");
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+/* Tooltips */
+.tooltip {
+    padding: 0;
+    background-color: #666;
+    border: 1px solid #666;
+    max-width: 350px;
+    display: inline-block;
+    color: #f1f1f1;
+    line-height: 1em !important;
+    font-size: 0.8em;
+    position: absolute;
+    z-index: 1000;
+}
+
+.tooltip-content {
+    padding: 10px 20px;
+    border: 1px solid #f1f1f1;
+}
+
+.tooltip .arrow {
+    background-image: url("images/tooltip-arrow.png");
+    width: 27px;
+    height: 15px;
+    position: absolute;
+    top: -14px;
+    left: 20px;
 }
 
 /* IDs *********************/
@@ -229,7 +326,7 @@ body {
     line-height: 45px;
     height: 45px;
     color: #ffffff;
-    font-size: 17px;
+    font-size: 1.0625em;
     border-right: 1px solid #ffffff;
     margin: 0 5px;
 }
@@ -258,7 +355,7 @@ body {
 
 	}
 
-	#intelligence-menu {
+	#reports-menu {
 
 	}
 
