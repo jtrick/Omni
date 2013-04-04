@@ -108,98 +108,107 @@ $(document).ready(function omniAdminReady() {
     });
 
     // custom tooltip for simplicity and to solve jumping around issue
-    $.widget("ui.omniTooltip", {
-        _create: function() {
-            var domElem = this.element,
-                id = nextId(),
-                timeOut = null,
-                timeRunning = false,
-                options = this.options,
-                disabled = false,
-                tt = $('' +
-                '<div class="tooltip" id="ui-tooltip-' + id + '">' +
-                    '<div class="tooltip-content">' +
-                        domElem.data("title") +
-                        '<div class="arrow"></div>' +
-                    '</div>' +
-                '<div>'
-                ).css({width: this.options.width + "px"}).hide();
+    var omniTooltip = (function() {
+        // omniTooltips static private variables
+        var disabled = false;
 
-            // tooltip public functions
-            this.toggle = function() {
-                disabled = !disabled;
-                if (disabled) {
-                    hideTooltip();
-                }
-            };
-
-            var adjustPos = function() {
-                var height = domElem.outerHeight(),
-                    width = domElem.outerWidth(),
-                    pos = domElem.offset(),
-                    left = 0,
-                    top = 0;
-
-                // Position the arrow according to the option
-                if (options.hasOwnProperty("arrowPos")) {
-                    switch (options.arrowPos) {
-                        case "bottom-left":
-                            left -= 33;
-                            break;
-                        case "bottom-center":
-                            left = left - 33 + width / 2;
-                            break;
-                        // default left of box to left of parent
-                        // can add other positions (above/below, right, etc.) if we need to
-                    }
-                }
-                tt.css({
-                    top: (pos.top + height + top + 15) + "px",
-                    left: (pos.left + left) + "px"
-                });
-            };
-
-            var showTooltip = function() {
-                if (!disabled) {
-                    adjustPos();
-                    tt.appendTo('body').fadeIn();
-                }
-            };
-
-            var hideTooltip = function() {
-                $('#ui-tooltip-' + id).fadeOut(function() {
-                    $(this).remove();
-                });
-                if (timeRunning) {
-                    clearTimeout(timeOut);
-                }
-                timeRunning = false;
+        // static public methods
+        this.toggle = function() {
+            disabled = !disabled;
+            if (disabled) {
+                $('.tooltip').remove();
             }
+        };
 
-            // Display the tooltip after a delay, cancel it if exited before it displays
-            domElem.hover(function() {
-                timeRunning = true;
-                timeOut = setTimeout(showTooltip, 1000);
-            }, hideTooltip);
-        }
-    });
+        // omniTooltip widget definition
+        $.widget("ui.omniTooltip", {
+            _create: function() {
+                var domElem = this.element,
+                    id = nextId(),
+                    timeOut = null,
+                    timeRunning = false,
+                    options = this.options,
+                    tt = $('' +
+                    '<div class="tooltip" id="ui-tooltip-' + id + '">' +
+                        '<div class="tooltip-content">' +
+                            domElem.data("title") +
+                            '<div class="arrow"></div>' +
+                        '</div>' +
+                    '<div>'
+                    ).css({width: this.options.width + "px"}).hide();
+
+                var adjustPos = function() {
+                    var height = domElem.outerHeight(),
+                        width = domElem.outerWidth(),
+                        pos = domElem.offset(),
+                        left = 0,
+                        top = 0;
+
+                    // Position the arrow according to the option
+                    if (options.hasOwnProperty("arrowPos")) {
+                        switch (options.arrowPos) {
+                            case "bottom-left":
+                                left -= 33;
+                                break;
+                            case "bottom-center":
+                                left = left - 33 + width / 2;
+                                break;
+                            // default left of box to left of parent
+                            // can add other positions (above/below, right, etc.) if we need to
+                        }
+                    }
+                    tt.css({
+                        top: (pos.top + height + top + 15) + "px",
+                        left: (pos.left + left) + "px"
+                    });
+                };
+
+                var showTooltip = function() {
+                    if (!disabled) {
+                        adjustPos();
+                        tt.appendTo('body').fadeIn();
+                    }
+                };
+
+                var hideTooltip = function() {
+                    $('#ui-tooltip-' + id).fadeOut(function() {
+                        $(this).remove();
+                    });
+                    if (timeRunning) {
+                        clearTimeout(timeOut);
+                    }
+                    timeRunning = false;
+                }
+
+                // Display the tooltip after a delay, cancel it if exited before it displays
+                domElem.hover(function() {
+                    timeRunning = true;
+                    timeOut = setTimeout(showTooltip, 1000);
+                }, hideTooltip);
+            }
+        });
+
+        return this;
+    })();
 
     // Pattern card widget definition
     $.widget("ui.patternCard", {
         _create: function() {
             var options = this.options,
-                domElem = this.element;
-
-            // create the card base
-            domElem.card(options);
+                domElem = this.element,
+                i,
+                tagList = "";
 
             // pattern card specific body content
             var patternTemp = _.template('' +
                 '<div class="content">' +
                     '<div class="timeframe">In the <span class="underline">{{timeframe}}</span>:</div>' +
-                    '<div class="large">{{statistic}}</div>' +
+                    '<div class="large">' +
+                        '{{statistic}}' +
+                        '<div>{{units}}</div>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="tag">{{tag}}</div>'
+                '<div class="tags">{{tags}}</div>'
             );
 
             // set the statistic for this pattern
@@ -207,8 +216,16 @@ $(document).ready(function omniAdminReady() {
                 this.element.find('.body .large').text(stat);
             };
 
+            // create the card base
+            domElem.card(options);
+
+            // generate tag list
+            for (i = 0; i < options.tags.length; i++) {
+                tagList += '<div>' + options.tags[i] + '</div>';
+            }
+
             // set the card body content
-            domElem.card("setContent", patternTemp(options));
+            domElem.card("setContent", patternTemp($.extend(options, {tags: tagList})));
 
             // add dropdown to timeframe
             domElem.find('.timeframe .underline').dropdownSelect({
@@ -233,23 +250,23 @@ $(document).ready(function omniAdminReady() {
 
     // Base card widget definition
     var cardWidget = (function() {
-        // patternCard static vars
+        // card static vars
         var curSelection = [];
 
-        // patternCard static methods
+        // card static methods
         this.getCurSelection = function() {
 
         };
 
         $.widget("ui.card", {
             _create: function() {
-                // patternCard private vars
+                // card private vars
                 var selected = false,
                     options = this.options,
                     domElem = this.element,
                     id = nextId();
 
-                // patternCard public methods
+                // card public methods
                 this.toggleSelect = function() {
                     selected = !selected;
                     if (!selected) {
@@ -259,15 +276,11 @@ $(document).ready(function omniAdminReady() {
                     }
                 };
 
-                this.toggleTooltips = function() {
-                    domElem.find('.tooltip').omniTooltip("toggle");
-                };
-
                 this.setContent = function(content) {
                     domElem.find('.body').html(content);
                 };
 
-                // patternCard private methods
+                // card private methods
                 var initialize = function() {
                     var cardTemp = _.template('' +
                             '<div class="title" data-title="Something">' +
@@ -299,6 +312,8 @@ $(document).ready(function omniAdminReady() {
                 initialize.apply(this);
             }
         });
+
+        return this;
     })();
 
     var buildCards = function(data) {
@@ -343,31 +358,35 @@ $(document).ready(function omniAdminReady() {
     /*  Sample data structure coming from server when the page is first loaded to build the
         initial cards */
     var cards = [{
-        title: "Time Spent On Homepage Prior ...",
+        title: "Privacy Policy",
         timeframe: "last hour",
-        statistic: "11.78s",
-        tag: "Display this data daily",
+        statistic: "9.42",
+        units: "%",
+        tags: ["privacy", "clicks"],
         titleColor: "#e75555"
     },
     {
-        title: "Number Of New Logins Created",
+        title: "Physical Shoppers",
         timeframe: "last 6 hours",
-        statistic: "9",
-        tag: "Display this data every Monday",
+        statistic: "11.78",
+        units: "%",
+        tags: ["landing", "clicks"],
         icon: "title-icon-2"
     },
     {
-        title: "Number Of Unique Guest IDs",
+        title: "Diligence",
         timeframe: "last 6 hours",
-        statistic: "22",
-        tag: "Display this data every Monday",
+        statistic: "3.8",
+        units: "pages",
+        tags: ["product page"],
         icon: "title-icon-2"
     },
     {
-        title: "Ratio New Logins Created/Unique ...",
+        title: "Just Looking",
         timeframe: "last 6 hours",
-        statistic: "0.409",
-        tag: "Display this data every Monday",
+        statistic: "11.78",
+        units: "%",
+        tags: ["homepage", "clicks"],
         icon: "title-icon-2"
     }];
 
@@ -381,11 +400,12 @@ $(document).ready(function omniAdminReady() {
         cursor: "move",
         start: function(event, ui) {
             closePopups();
-            ui.item.patternCard('toggleTooltips');
+            omniTooltip.toggle();
         },
         stop: function(event, ui) {
             // make sure the z-index isn't set to 0 after dragging
             ui.item.css({"z-index": 999});
+            omniTooltip.toggle();
         }
     });
 	

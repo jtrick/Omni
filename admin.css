@@ -142,10 +142,20 @@ body {
     padding-right: 10px;
 }
 
-.card .tag {
+.card .tags {
     background-color: #f1f1f1;
-    padding: 15px 20px;
+    padding: 10px 15px;
     margin: 0 10px 10px 10px;
+}
+
+.card .tags div {
+    background-color: #d5d5d5;
+    border: 1px solid #666;
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 5px 8px;
+    margin-right: 10px;
+    border-radius: 2px;
 }
 
 .card .large {
@@ -153,6 +163,15 @@ body {
     position: relative;
     top: -15px;
     cursor: pointer;
+}
+
+.card .large div {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    padding-left: 100%;
+    font-size: 0.5em;
+    line-height: 0.5em;
 }
 
 .underline {
