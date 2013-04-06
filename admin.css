@@ -20,7 +20,7 @@ body {
 
 
 .container {
-
+    position: relative;
 }
 
 .top-menu-item {
@@ -103,8 +103,8 @@ body {
 
 .card .check {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 8px;
+    right: 8px;
     width: 33px;
     height: 33px;
     background-image: url("images/check.png");
@@ -130,11 +130,11 @@ body {
 
 .card .content {
     padding: 10px 60px;
+    min-height: 70px;
 }
 
 .card .content > div {
     display: inline-block;
-    height: 60px;
     vertical-align: top;
 }
 
@@ -158,20 +158,22 @@ body {
     border-radius: 2px;
 }
 
-.card .large {
+.card .statistic {
+    line-height: 45px;
+}
+
+.card .statistic div {
+    display: inline-block;
+}
+
+.card .statistic .large {
     font-size: 3.125em;
-    position: relative;
-    top: -15px;
     cursor: pointer;
 }
 
-.card .large div {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding-left: 100%;
-    font-size: 0.5em;
-    line-height: 0.5em;
+.card .statistic .units {
+    font-size: 1.1em;
+    padding-left: 8px;
 }
 
 .underline {
@@ -210,20 +212,23 @@ body {
         background-position: 0 -72px;
     }
 
-    .title-icon {
+    .icon.light {
+        background-image: url('images/card-title-icons.png');
+    }
+    .icon.dark {
+        background-image: url('images/card-title-icons-black.png');
+    }
+    .title-icon-0 {
         display: inline-block;
         width: 45px;
         height: 31px;
         margin: 10px 8px 0 0;
-        background-image: url('images/card-title-icons.png');
     }
-
-    .title-icon-2 {
+    .title-icon-1 {
         display: inline-block;
         width: 45px;
         height: 39px;
         margin: 4px 8px 0 0;
-        background-image: url('images/card-title-icons.png');
         background-position: 0 -31px;
     }
 
@@ -339,6 +344,13 @@ body {
     -webkit-box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
     -moz-box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
     box-shadow: 0 15px 55px 0 rgba(0,0,0,0.1);
+}
+
+#cat-div {
+    position: absolute;
+    top: 110px;
+    left: -60px;
+    width: 45px;
 }
 
 #omni-top-menu {

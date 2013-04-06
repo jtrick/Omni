@@ -1,9 +1,13 @@
 // omni/admin.js  Copyright (c)2013 Codapt LLC, all rights reserved.  For license see: http://OpenAce.org/license?id=omni/admin.js
 
+// admin module object
+var admin = {};
+
+// encapsulate functionality
 $(document).ready(function omniAdminReady() {
 
     // Adds a watcher to obj on attr with watcher name which executes callback when the attr is set
-    var watch = function(obj, attr, name, callback) {
+    admin.watch = function(obj, attr, name, callback) {
         var watchedValue = obj[attr];
         // add a list of watchers to the object if not present
         if (!obj.hasOwnProperty("_watchers")) {
@@ -35,7 +39,7 @@ $(document).ready(function omniAdminReady() {
     };
 
     // Removes the watcher on obj's attr with the specified name
-    var unwatch = function(obj, attr, name) {
+    admin.unwatch = function(obj, attr, name) {
         if (obj.hasOwnProperty("_watchers") && obj._watchers.hasOwnProperty(attr) &&
             obj._watchers[attr].hasOwnProperty(name)) {
             delete  obj._watchers[attr][name];
@@ -43,17 +47,17 @@ $(document).ready(function omniAdminReady() {
     };
 
     // Show any kind of popup, closes all others and stops even from bubbling to html which closes open popups
-    var showPopup = function(e, id) {
+    admin.showPopup = function(e, id) {
         $('.popup').hide();
         $(id).show();
         e.stopPropagation();
     };
-    var closePopups = function() {
+    admin.closePopups = function() {
         $('.popup').hide();
     };
 
     // generates a new id for dynamic page elements
-    var nextId = (function() {
+    admin.nextId = (function() {
         // static private variable
         var staticId = 0,
             getNext = function() {
@@ -66,7 +70,7 @@ $(document).ready(function omniAdminReady() {
     // Selectable drop down widgets definition
     $.widget("ui.dropdownSelect", {
         _create: function() {
-            var id = nextId(),
+            var id = admin.nextId(),
                 theme = this.options.theme || "light",
                 dropdown = $('<ul class="select-dropdown ' + theme + ' popup" id="select-dropdown' + id + '"></ul>'),
                 option,
@@ -78,7 +82,7 @@ $(document).ready(function omniAdminReady() {
             var performClick = function(callback, element) {
                 return function(e) {
                     callback.apply(element);
-                    closePopups();
+                    admin.closePopups();
                     e.stopPropagation();
                 };
             }
@@ -102,13 +106,13 @@ $(document).ready(function omniAdminReady() {
             }).hide();
 
             domElem.addClass("pointer").click(function(e) {
-                showPopup(e, '#select-dropdown' + id);
+                admin.showPopup(e, '#select-dropdown' + id);
             });
         }
     });
 
     // custom tooltip for simplicity and to solve jumping around issue
-    var omniTooltip = (function() {
+    admin.omniTooltip = (function() {
         // omniTooltips static private variables
         var disabled = false;
 
@@ -124,7 +128,7 @@ $(document).ready(function omniAdminReady() {
         $.widget("ui.omniTooltip", {
             _create: function() {
                 var domElem = this.element,
-                    id = nextId(),
+                    id = admin.nextId(),
                     timeOut = null,
                     timeRunning = false,
                     options = this.options,
@@ -191,65 +195,8 @@ $(document).ready(function omniAdminReady() {
         return this;
     })();
 
-    // Pattern card widget definition
-    $.widget("ui.patternCard", {
-        _create: function() {
-            var options = this.options,
-                domElem = this.element,
-                i,
-                tagList = "";
-
-            // pattern card specific body content
-            var patternTemp = _.template('' +
-                '<div class="content">' +
-                    '<div class="timeframe">In the <span class="underline">{{timeframe}}</span>:</div>' +
-                    '<div class="large">' +
-                        '{{statistic}}' +
-                        '<div>{{units}}</div>' +
-                    '</div>' +
-                '</div>' +
-                '<div class="tags">{{tags}}</div>'
-            );
-
-            // set the statistic for this pattern
-            this.setStatistic = function(stat) {
-                this.element.find('.body .large').text(stat);
-            };
-
-            // create the card base
-            domElem.card(options);
-
-            // generate tag list
-            for (i = 0; i < options.tags.length; i++) {
-                tagList += '<div>' + options.tags[i] + '</div>';
-            }
-
-            // set the card body content
-            domElem.card("setContent", patternTemp($.extend(options, {tags: tagList})));
-
-            // add dropdown to timeframe
-            domElem.find('.timeframe .underline').dropdownSelect({
-                selections: [
-                    {
-                        text: "Last hour",
-                        click: function() {alert($(this).text());}
-                    },
-                    {
-                        text: "Last 12 hours",
-                        click: function() {alert($(this).text());}
-                    },
-                    {
-                        text: "Last 24 hours",
-                        click: function() {alert($(this).text());}
-                    }
-                ],
-                width: 150
-            });
-        }
-    });
-
     // Base card widget definition
-    var cardWidget = (function() {
+    admin.cardWidget = (function() {
         // card static vars
         var curSelection = [];
 
@@ -258,13 +205,28 @@ $(document).ready(function omniAdminReady() {
 
         };
 
+        // Sort cards based on a provided sorting function
+        this.sort = function(sortFunc) {
+            var sorter = $('#panels-sect .card'),
+                i;
+
+            // sort function will receive the two elements as DOM elements
+            // detach the current cards from the DOM
+            sorter = sorter.detach().sort(sortFunc);
+
+            // put them back
+            for (i = 0; i < sorter.length; i++) {
+                $('#panels-sect').append(sorter[i]);
+            }
+        }
+
         $.widget("ui.card", {
             _create: function() {
                 // card private vars
                 var selected = false,
                     options = this.options,
                     domElem = this.element,
-                    id = nextId();
+                    id = admin.nextId();
 
                 // card public methods
                 this.toggleSelect = function() {
@@ -284,7 +246,7 @@ $(document).ready(function omniAdminReady() {
                 var initialize = function() {
                     var cardTemp = _.template('' +
                             '<div class="title" data-title="Something">' +
-                                '<div class="{{icon}}"></div>' +
+                                '<div class="title-icon-{{icon}} icon light"></div>' +
                                 '<div>{{title}}</div>' +
                             '</div>' +
                             '<div class="body">' +
@@ -316,97 +278,8 @@ $(document).ready(function omniAdminReady() {
         return this;
     })();
 
-    var buildCards = function(data) {
-        var i, card;
-        for (i = 0; i < data.length; i++) {
-            card = $('<div></div>');
-            $('#panels-sect').append(card);
-            card.patternCard(data[i]);
-        }
-    }
-
     // Close all popups if a click bubbles up to html
-    $('html').click(closePopups);
+    // should be common to all admin interface pages
+    $('html').click(admin.closePopups);
 
-    // Add tooltips to card action buttons
-    $('.card-btns div').omniTooltip({arrowPos: "bottom-center"});
-
-    // Add dropdown to the sort button
-    $('#sort-btn').dropdownSelect({
-        selections: [
-            {
-                text: "Icon (Category)",
-                click: function() {alert($(this).text());}
-            },
-            {
-                text: "Importance (Color)",
-                click: function() {alert($(this).text());}
-            },
-            {
-                text: "Custom 1",
-                click: function() {alert($(this).text());}
-            },
-            {
-                text: "Custom 2",
-                click: function() {alert($(this).text());}
-            }
-        ],
-        width: 200,
-        theme: "dark"
-    });
-
-    /*  Sample data structure coming from server when the page is first loaded to build the
-        initial cards */
-    var cards = [{
-        title: "Privacy Policy",
-        timeframe: "last hour",
-        statistic: "9.42",
-        units: "%",
-        tags: ["privacy", "clicks"],
-        titleColor: "#e75555"
-    },
-    {
-        title: "Physical Shoppers",
-        timeframe: "last 6 hours",
-        statistic: "11.78",
-        units: "%",
-        tags: ["landing", "clicks"],
-        icon: "title-icon-2"
-    },
-    {
-        title: "Diligence",
-        timeframe: "last 6 hours",
-        statistic: "3.8",
-        units: "pages",
-        tags: ["product page"],
-        icon: "title-icon-2"
-    },
-    {
-        title: "Just Looking",
-        timeframe: "last 6 hours",
-        statistic: "11.78",
-        units: "%",
-        tags: ["homepage", "clicks"],
-        icon: "title-icon-2"
-    }];
-
-    // Build cards with the fake data
-    buildCards(cards);
-
-    // Make cards sortable
-    $("#panels-sect").sortable({
-        handle: ".title",
-        opacity: 0.5,
-        cursor: "move",
-        start: function(event, ui) {
-            closePopups();
-            omniTooltip.toggle();
-        },
-        stop: function(event, ui) {
-            // make sure the z-index isn't set to 0 after dragging
-            ui.item.css({"z-index": 999});
-            omniTooltip.toggle();
-        }
-    });
-	
 }(jQuery)); //omniAdminReady()
