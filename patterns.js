@@ -1,6 +1,6 @@
 $(document).ready(function omniPatternsReady() {
 
-    // non-jQuery "widget". Only need one and not really UI based
+    // category widget for monitoring categories on page and filtering cards
     var categoryWidget = (function() {
         // static array tracking categories on the page
         var categories = [];
@@ -12,12 +12,49 @@ $(document).ready(function omniPatternsReady() {
         };
 
         this.update = function() {
-            var i;
+            var i, cat;
             $('#cat-div').empty();
             for (i = 0; i < categories.length; i++) {
-                $('#cat-div').append('<div class="title-icon-' + categories[i] + ' icon dark"></div>');
+                cat = $('<div></div>').category({cat: categories[i]});
+                $('#cat-div').append(cat);
             }
         };
+
+        this.filterCards = function() {
+            // get enabled categories
+            var enabledCats = [];
+            $('#cat-div > div').each(function() {
+                if ($(this).category("enabled")) {
+                    enabledCats.push($(this).category("option", "cat"));
+                }
+            });
+
+            admin.cardWidget.filter(function (a) {
+                return enabledCats.indexOf($(a).card("option", "icon")) >= 0;
+            });
+        };
+
+        $.widget("ui.category", {
+            _create: function() {
+                var domElem = this.element,
+                    options = this.options,
+                    enabled = true;
+
+                this.enabled = function() {
+                    return enabled;
+                };
+
+                domElem.addClass("icon dark title-icon-" + options.cat).click(function() {
+                    enabled = !enabled;
+                    categoryWidget.filterCards();
+                    if (enabled) {
+                        $(this).removeClass("gray").addClass("dark");
+                    } else {
+                        $(this).removeClass("dark").addClass("gray");
+                    }
+                });
+            }
+        });
 
         return this;
     })();
@@ -48,7 +85,7 @@ $(document).ready(function omniPatternsReady() {
             };
 
             // create the card base
-            domElem.card(options);
+            domElem.card(options).addClass("pattern");
 
             // add the card category
             categoryWidget.addCat(options.icon);
@@ -91,7 +128,11 @@ $(document).ready(function omniPatternsReady() {
         var i, card;
         for (i = 0; i < data.length; i++) {
             card = $('<div></div>');
-            $('#panels-sect').append(card);
+            if (data[i].archived) {
+                $('#archive-sect').append(card);
+            } else {
+                $('#panels-sect').append(card);
+            }
             card.patternCard(data[i]);
             categoryWidget.addCat(data[i].icon);
         }
@@ -101,6 +142,7 @@ $(document).ready(function omniPatternsReady() {
      initial cards */
     var cards = [{
             title: "Privacy Policy",
+            desc: "I'm not sure what this pattern is.",
             timeframe: "last hour",
             statistic: "9.42",
             units: "%",
@@ -110,6 +152,7 @@ $(document).ready(function omniPatternsReady() {
         },
         {
             title: "Physical Shoppers",
+            desc: "Percentage who looked at buying things.",
             timeframe: "last 6 hours",
             statistic: "11.78",
             units: "%",
@@ -118,6 +161,7 @@ $(document).ready(function omniPatternsReady() {
         },
         {
             title: "Diligence",
+            desc: "How many pages did people peruse.",
             timeframe: "last 6 hours",
             statistic: "3.8",
             units: "pages",
@@ -126,11 +170,22 @@ $(document).ready(function omniPatternsReady() {
         },
         {
             title: "Just Looking",
+            desc: "Percentage who came and did nothing.",
             timeframe: "last 6 hours",
             statistic: "11.78",
             units: "%",
             tags: ["homepage", "clicks"],
             icon: 1
+        },
+        {
+            title: "Just Looking",
+            desc: "Percentage who came and did nothing.",
+            timeframe: "last 6 hours",
+            statistic: "11.78",
+            units: "%",
+            tags: ["homepage", "clicks"],
+            icon: 1,
+            archived: true
         }
     ];
 
@@ -148,15 +203,36 @@ $(document).ready(function omniPatternsReady() {
         selections: [
             {
                 text: "Icon (Category)",
-                click: function() {alert($(this).text());}
+                click: function() {
+                    admin.cardWidget.sort(function(a, b) {
+                        return parseInt($(a).card("option", "icon")) -
+                            parseInt($(b).card("option", "icon"));
+                    });
+                    $('#sort-msg').text("Sort By " + $(this).text());
+                }
             },
             {
                 text: "Importance (Color)",
-                click: function() {alert($(this).text());}
+                click: function() {
+                    // bases importance based on the amount of red
+                    admin.cardWidget.sort(function(a, b) {
+                        var c = $(a).find('.title').css("background-color") || "rgb(0,0,0)",
+                            d = $(b).find('.title').css("background-color") || "rgb(0,0,0)";
+                        c = parseInt(c.substring(4, c.indexOf(",")));
+                        d = parseInt(d.substring(4, d.indexOf(",")));
+                        return c - d;
+                    });
+                    $('#sort-msg').text("Sort By " + $(this).text());
+                }
             },
             {
-                text: "Custom 1",
-                click: function() {alert($(this).text());}
+                text: "Statistic",
+                click: function() {
+                    admin.cardWidget.sort(function(a, b) {
+                        return parseInt($(a).find('.large').text()) - parseInt($(b).find('.large').text());
+                    });
+                    $('#sort-msg').text("Sort By " + $(this).text());
+                }
             },
             {
                 text: "Custom 2",
@@ -181,13 +257,6 @@ $(document).ready(function omniPatternsReady() {
             ui.item.css({"z-index": 999});
             admin.omniTooltip.toggle();
         }
-    });
-
-    // test sort. Sort based on the values of the statistic
-    // these sort methods would go in the callback function when you
-    // declare a dropdownSelect
-    admin.cardWidget.sort(function(a, b) {
-        return parseInt($(a).find('.large').text()) - parseInt($(b).find('.large').text());
     });
 
 }(jQuery)); //omniPatternsReady()

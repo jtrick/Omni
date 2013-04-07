@@ -18,6 +18,10 @@ body {
 
 /* Classes *********************/
 
+.main-div {
+    width: 910px;
+    margin: auto;
+}
 
 .container {
     position: relative;
@@ -86,10 +90,16 @@ body {
 
 .card {
     border: 1px solid #d1d5c4;
-    width: 443px;
     float: left;
     margin: 10px 5px 0 5px;
     position: relative;
+}
+
+.card.pattern {
+    width: 443px;
+}
+.card.graph {
+    width: 900px;
 }
 
 .card .title {
@@ -126,14 +136,23 @@ body {
     position: relative;
 }
 
-/* Pattern Card specific styles */
+/* Graph Card specific styles */
+.card .graph {
+    display: block;
+    width: 100%;
+}
 
-.card .content {
+/* Pattern Card specific styles */
+.card.archived {
+    opacity: 0.5;
+}
+
+.card.pattern .content {
     padding: 10px 60px;
     min-height: 70px;
 }
 
-.card .content > div {
+.card.pattern .content > div {
     display: inline-block;
     vertical-align: top;
 }
@@ -191,32 +210,39 @@ body {
     height: 24px;
     margin: 7px 0 0 25px;
     display: inline-block;
+    background-image: url('images/card-icons.png');
+}
+.card-btns div:hover {
+    background-image: url('images/card-icons-dark.png');
 }
 
     .graphs-card-btn {
-        background-image: url('images/card-icons.png');
+
     }
 
     .duplicate-card-btn {
-        background-image: url('images/card-icons.png');
         background-position: 0 -24px;
     }
 
     .share-card-btn {
-        background-image: url('images/card-icons.png');
         background-position: 0 -48px;
     }
 
     .delete-card-btn {
-        background-image: url('images/card-icons.png');
         background-position: 0 -72px;
     }
 
+    .icon {
+        cursor: pointer;
+    }
     .icon.light {
         background-image: url('images/card-title-icons.png');
     }
     .icon.dark {
         background-image: url('images/card-title-icons-black.png');
+    }
+    .icon.gray {
+        background-image: url('images/card-title-icons-gray.png');
     }
     .title-icon-0 {
         display: inline-block;
@@ -328,12 +354,6 @@ body {
 
 /* IDs *********************/
 
-
-#main-div {
-    width: 910px;
-    margin: auto;
-}
-
 #main-top-bar {
     background-color: #a5d140;
     position: absolute;
@@ -351,6 +371,23 @@ body {
     top: 110px;
     left: -60px;
     width: 45px;
+}
+
+#archive-bar {
+    clear: both;
+    padding: 30px 0 10px 0;
+}
+
+#archive-bar > div {
+    background-color: #f1f1f1;
+}
+
+#archive-bar .content {
+    width: 900px;
+    margin: 0 auto;
+    font-size: 1.2em;
+    color: #666;
+    line-height: 2.5em;
 }
 
 #omni-top-menu {
