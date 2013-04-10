@@ -22,7 +22,8 @@ $(document).ready(function omniPatternsReady() {
             domElem.card("setContent", graphTemp(options));
 
             // create the graph
-            domElem.find('.graph').highcharts(options.chart);
+            $.plot(domElem.find('.graph'), options.chart, options.chart_opt);
+
 
             // add dropdown to timeframe
             domElem.find('.timeframe .underline').dropdownSelect({
@@ -58,58 +59,35 @@ $(document).ready(function omniPatternsReady() {
         }
     }
 
-    var tmpchart = {
-        chart: {
-            type: 'line',
-            marginRight: 130,
-            marginBottom: 25
+    var tmpchart = [
+        {
+            "data": [[55,160],[56,95.39],[58,74.82],[59,72.5],[60,51.36],
+                [63,48.56],[65,46.56],[66,43.86],[67,43.66],[77,25.2],
+                [78,22.45],[80,20.69],[81,32.11],[84,32.11],[85,30.81],
+                [86,28.39],[88,28.37],[91,26.6],[93,25.9]],
+            "color": "#557be6",
+            "hoverable": true,
+            "clickable": true
+        }
+    ];
+
+    var tmpoptions = {
+        "xaxis": {
+            "ticks": [[56,""],[56,"02\/25"],[58,"02\/27"],[59,"02\/28"],[60,"03\/01"],[63,"03\/04"],[65,"03\/06"],[66,"03\/07"],[67,"03\/08"],[77,"03\/18"],[78,"03\/19"],[80,"03\/21"],[81,"03\/22"],[84,"03\/25"],[85,"03\/26"],[86,"03\/27"],[88,"03\/29"],[91,"04\/01"],[93,"04\/03"]]
         },
-        title: {
-            text: 'Monthly Average Temperature',
-            x: -20 //center
+        "grid": {
+            "hoverable": true,
+            "clickable": true
         },
-        subtitle: {
-            text: 'Source: WorldClimate.com',
-            x: -20
+        "lines": {
+            "show": true,
+            "lineWidth": 5
         },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (°C)'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -10,
-            y: 100,
-            borderWidth: 0
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'New York',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        }, {
-            name: 'Berlin',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
+        "points": {
+            "show": true,
+            "lineWidth": 2,
+            "radius": 5
+        }
     };
 
     /*  Sample data structure coming from server when the page is first loaded to build the
@@ -120,28 +98,32 @@ $(document).ready(function omniPatternsReady() {
             timeframe: "last hour",
             icon: 1,
             titleColor: "#e75555",
-            chart: tmpchart
+            chart: tmpchart,
+            chart_opt: tmpoptions
         },
         {
             title: "Physical Shoppers",
             desc: "Percentage who looked at buying things.",
             timeframe: "last 6 hours",
             icon: 0,
-            chart: tmpchart
+            chart: tmpchart,
+            chart_opt: tmpoptions
         },
         {
             title: "Diligence",
             desc: "How many pages did people peruse.",
             timeframe: "last 6 hours",
             icon: 1,
-            chart: tmpchart
+            chart: tmpchart,
+            chart_opt: tmpoptions
         },
         {
             title: "Just Looking",
             desc: "Percentage who came and did nothing.",
             timeframe: "last 6 hours",
             icon: 1,
-            chart: tmpchart
+            chart: tmpchart,
+            chart_opt: tmpoptions
         },
         {
             title: "Just Looking",
@@ -149,7 +131,8 @@ $(document).ready(function omniPatternsReady() {
             timeframe: "last 6 hours",
             icon: 1,
             archived: true,
-            chart: tmpchart
+            chart: tmpchart,
+            chart_opt: tmpoptions
         }
     ];
 
