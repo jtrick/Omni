@@ -70,11 +70,11 @@ $(document).ready(function omniPatternsReady() {
             // pattern card specific body content
             var patternTemp = _.template('' +
                 '<div class="content">' +
-                '<div class="timeframe">In the <span class="underline">{{timeframe}}</span>:</div>' +
-                '<div class="statistic">' +
-                '<div class="large">{{statistic}}</div>' +
-                '<div class="units">{{units}}</div>' +
-                '</div>' +
+                    '<div class="timeframe">In the <span class="underline">{{timeframe}}</span>:</div>' +
+                    '<div class="statistic">' +
+                    '<div class="large">{{statistic}}</div>' +
+                    '<div class="units">{{units}}</div>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="tags">{{tags}}</div>'
             );
