@@ -5,7 +5,15 @@ var admin = {};
 
 // encapsulate functionality
 $(document).ready(function omniAdminReady() {
-
+    
+    var OMNI = null,  // The authenticated API reference used to obtain current admin data for this site.
+    	omniKey = null;  // Auto-generated unique 64 char key used to identify this client between simultaneous server connections.
+	$.ajax({url:'https://codapt.com/test/a.js',dataType:"script",async:false,success:function() { 
+		var chars="0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz"; omniKey=''+Date.now();
+		for (var i=0;i<51;i++) { omniKey += chars.charAt(Math.floor(Math.random()*chars.length)); }
+		OMNI=window.omni.load(omniKey);
+	}});
+    
     // Adds a watcher to obj on attr with watcher name which executes callback when the attr is set
     admin.watch = function(obj, attr, name, callback) {
         var watchedValue = obj[attr];
