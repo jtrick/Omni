@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html><!-- /#buttons-sect -->
+<head>
+	<meta charset="utf-8">
+	<title>Omni Admin Panel</title>
+
+    <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+    <div id="main-top-bar"></div>
+	<div class="main-div container">
+        <div id="cat-div">
+
+        </div>
+
+		<div id="omni-top-menu" class="menu">
+            <div class="container">
+                <div id="logo-menu" class="top-menu-item">&nbsp;</div>
+                <div id="patterns-menu" class="top-menu-item selected">Patterns</div>
+                <div id="graphs-menu" class="top-menu-item">Graphs</div>
+                <div id="people-menu" class="top-menu-item">People</div>
+                <div id="reports-menu" class="top-menu-item">Reports</div>
+                <div id="power-menu" class="top-menu-item"><div></div></div>
+                <div id="settings-menu" class="top-menu-item"><div></div></div>
+                <div id="search-menu" class="searchbox top-menu-item">
+                    <div>
+                        <input type="text" value="Search" />
+                        <div class="search-btn"></div>
+                    </div>
+                </div>
+            </div><!-- /.container -->
+		</div><!-- /#omni-top-menu -->
+		
+		<div id="buttons-sect" class="container">
+            <div id="sort-btn" class="btn">Sort By Last Name (A-Z)</div>
+            <div id="manage-btn" class="btn">Manage People</div>
+            <div id="save-btn" class="btn">Save As</div>
+            <div class="card-btns">
+                <div class="graphs-card-btn" data-title="Show Graphs"></div>
+                <div class="duplicate-card-btn" data-title="Duplicate"></div>
+                <div class="share-card-btn" data-title="Share"></div>
+                <div class="delete-card-btn" data-title="Archive"></div>
+            </div>
+		</div><!-- /#buttons-sect -->
+		
+		<div id="panels-sect" class="container">
+		</div><!-- /#panels-sect -->	
+	</div><!-- /#main-div -->
+	
+    <div id="archive-bar">
+        <div>
+            <div class="content">Archived</div>
+        </div>
+    </div><!-- /#archive-bar -->
+    <div class="main-div">
+        <div id="archive-sect"></div>
+    </div><!-- /#archive-sect -->
+	
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+    <script src="http://openace.org/js/libs/_/_.js"></script>
+	<script src="admin.js"></script>
+	<script src="people.js"></script>
+</body>
+</html>
